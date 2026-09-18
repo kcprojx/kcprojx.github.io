@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23fe8a4c%22></rect><path fill=%22%23fff%22 d=%22M59.59 47.63L85.25 79.92Q85.63 80.50 85.63 81.25Q85.63 82.02 85.01 82.63Q84.39 83.25 83.54 83.25L83.54 83.25L59.02 83.25Q56.84 83.25 55.60 81.73L55.60 81.73L39.07 61.30L39.07 80.69Q39.07 81.73 38.31 82.49Q37.55 83.25 36.51 83.25L36.51 83.25L16.94 83.25Q15.89 83.25 15.13 82.49Q14.38 81.73 14.38 80.69L14.38 80.69L14.38 19.31Q14.38 18.27 15.13 17.51Q15.89 16.75 16.94 16.75L16.94 16.75L36.51 16.75Q37.55 16.75 38.31 17.51Q39.07 18.27 39.07 19.31L39.07 19.31L39.07 37.17L54.09 18.36Q55.51 16.75 57.60 16.75L57.60 16.75L80.50 16.75Q81.35 16.75 81.97 17.37Q82.59 17.98 82.59 18.79Q82.59 19.60 82.11 20.17L82.11 20.17L59.59 47.63Z%22></path></svg>" />
+  <title>สุขกันเถอะเรา - from kcdance/dance07a.html | compact UI 'Just One Look Dance Steps Modification', for detail look at chrome with Green Phone Profile</title>
+  <style>
+    :root {
+      /* Palette: High-Contrast, Calm Navy & Warm Amber Accent Theme */
+      --color-primary: #1d4ed8;       /* Royal Blue - clear contrast */
+      --color-primary-dark: #1e3a8a;  /* Deep Navy */
+      --color-accent: #fe8a4c;       /* Soft Amber Accent */
+      --color-accent-light: #fef3c7; /* Light Warm Yellow background */
+      --color-text-dark: #0f172a;    /* High contrast near-black text */
+      --color-text-subtle: #475569;  /* Muted grey-blue text */
+      
+      --bg-color: #f1f5f9;
+      --card-bg: #ffffff;
+      --border-color: #cbd5e1;
+      --shadow-soft: 0 4px 14px rgba(15, 23, 42, 0.08);
+      --dance-title-color: #f60d0d;
+      --dance-h1-title:#1d4ed8;
+
+      /* Touch & Fluid Sizing Defaults */
+      --touch-min-height: 48px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--color-text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-size: 1.125rem; /* 18px base for optimal legibility */
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000; /* Ensures the header stays on top of content when scrolling */
+      padding: 0.75rem 1rem;
+      background-color: var(--card-bg);
+      border-bottom: 3px solid var(--color-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    header h1 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 700;
+      color: var(--dance-h1-title);
+      text-align: center;
+    }
+
+    /* Unified Search Wrapper */
+    .search-wrapper {
+      position: relative;
+      width: 90%;
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      border: 2px solid var(--color-primary);
+      border-radius: 28px;
+      padding: 0.25rem 0.5rem;
+      min-height: var(--touch-min-height);
+      box-sizing: border-box;
+    }
+    /* kckckc ***  might need to come back here, might no longer need and this might cause issues with the search box and tag menu */
+    .search-wrapper:focus-within {
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.25);
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 0;
+      padding: 0.5rem;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--color-text-dark);
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+    .style-dropdown summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.4rem 0.75rem;
+      border-radius: 20px;
+      background-color: var(--color-primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+      max-width: 130px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .style-dropdown summary::-webkit-details-marker {
+      display: none;
+    }
+    
+    .style-dropdown summary::after {
+      content: '▾';
+      font-size: 0.8rem;
+    }
+    .style-menu {
+      position: absolute;
+      top: 125%;
+      left: 0;
+      /* kckc change bg color from #ffffff to #defbe0 to make it stand out */
+      background-color: #defbe0;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      padding: 0.5rem;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      width: 270px;
+
+      /* max-height: 300px;   kckc removed this and added the next line to make it more responsive */
+      /* Dynamically caps the height relative to the screen size */
+      max-height: calc(80dvh - 60px);
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .clear-btn {
+      background: none;
+      border: none;
+      color: var(--color-text-subtle);
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: none;
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 3. Prevent Quick Tags button from shrinking or overflowing */
+    /* Tag Menu */
+    .tag-dropdown {
+      position: relative;
+      flex-shrink: 0; /* Prevents the tag button from expanding or overflowing */
+      user-select: none;
+    }
+
+    .tag-dropdown summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      background-color: #e2e8f0;
+      color: var(--color-primary-dark);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 40px;
+    }
+
+    .tag-dropdown summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .tag-dropdown summary::after {
+      content: '▾';
+      font-size: 0.9rem;
+    }
+
+    /* 4. Anchor the dropdown menu inside the screen edge */
+    .tag-menu {
+      position: absolute;
+      top: 125%;
+      right: 0;    /* Aligns menu to right edge of button */
+      background-color: #f9e5fb;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      padding: 0.75rem;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 0.5rem;
+      width: 230px;
+      z-index: 100;
+
+      /* Enable smooth scrolling */
+      /* max-height: 300px;   kckc removed this and added the next line to make it more responsive */
+      /* Dynamically caps the height relative to the screen size */
+      max-height: calc(80dvh - 60px);
+      overflow-y: auto;            /* Shows vertical scrollbar when needed */
+      -webkit-overflow-scrolling: touch; /* Ensures smooth touch scrolling on iOS */
+    }
+
+    .tag-option {
+      background-color: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text-dark);
+      cursor: pointer;
+      text-align: left;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .tag-option:hover {
+      background-color: var(--color-accent-light);
+    }
+
+    /* Main Container Adjust Main Layout Grid since Left Panel is removed */
+    .container {
+      display: block;
+      padding: 1rem;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 850px) {
+      .container {
+        grid-template-columns: 300px 1fr;
+        padding: 1.5rem;
+      }
+    }
+
+    .panel {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-soft);
+      padding: 1rem;
+    }
+
+    .panel h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-primary-dark);
+      margin-bottom: 0.4rem;
+      border-bottom: 3px solid var(--color-accent);
+      padding-bottom: 0.2rem;
+    }
+
+    /* Accordion & Style Selector */
+    .mobile-accordion summary {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-primary-dark);
+      cursor: pointer;
+      padding: 0.75rem 1rem;
+      background-color: #e2e8f0;
+      border-radius: 8px;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: var(--touch-min-height);
+    }
+
+    .mobile-accordion summary::after {
+      content: '▼';
+      font-size: 0.9rem;
+      color: var(--color-primary-dark);
+      transition: transform 0.2s ease;
+    }
+
+    .mobile-accordion[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .style-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+
+    .style-item {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #f8fafc;
+      color: var(--color-text-dark);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border: 1.5px solid var(--border-color);
+      min-height: var(--touch-min-height);
+      display: flex;
+      align-items: center;
+    }
+
+    .style-item:hover {
+      background-color: var(--color-accent-light);
+      border-color: var(--color-accent);
+    }
+
+    .style-item.active {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary-dark);
+    }
+
+    /* Right Panel: Content Display */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 0.85rem 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
+
+    th {
+      padding-top: 0.4rem;
+      padding-bottom: 0.4rem;
+      color: var(--color-primary-dark);
+      font-weight: 500;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+
+    .dance-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .dance-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--dance-title-color);
+    }
+
+    .dance-links a {
+      color: var(--color-text-dark);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 0.5rem;
+      margin-bottom: 0.4rem;
+      padding: 0.5rem 0.85rem;
+      background-color: var(--color-accent-light);
+      border: 1px solid var(--color-accent);
+      border-radius: 8px;
+      min-height: 44px;
+    }
+
+    .dance-links a:hover {
+      background-color: var(--color-accent);
+      color: #000;
+    }
+
+    .song-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;    /* Reduced from 0.5rem to pull items closer */
+    }
+
+    .song-list a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-size: 1rem;      /* Reduced slightly from 1.05rem for a tighter fit */
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.15rem 0.4rem;    /* Reduced from 0.4rem 0.5rem to decrease line height */
+      border-radius: 6px;
+      min-height: 32px;           /* Reduced from 44px to significantly save vertical space */
+      line-height: 1.3;
+    }
+
+    .song-list a:hover {
+      background-color: #e2e8f0;
+    }
+    .song-icon {
+      width: 0.9em;
+      height: 0.9em;
+      vertical-align: -0.15em; /* Aligns the icon nicely with text baseline */
+      flex-shrink: 0;         /* Prevents icon distortion when space is tight */
+    }
+    /* Instructions Box */
+    .instructions-box {
+      padding: 1rem;
+      background-color: #f8fafc;
+      border: 1px solid var(--color-accent);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--color-text-dark);
+      margin-top: 0.2rem;
+    }
+
+    .instructions-box strong.title {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--color-primary-dark);
+      font-size:1rem;
+      font-weight: 500;
+    }
+
+    .instructions-box ol {
+      padding-left: 1.25rem;
+    }
+
+    .instructions-box li {
+      margin-bottom: 0.85rem;
+    }
+
+    .step-section {
+      margin-bottom: 0.85rem;
+    }
+
+    .step-section strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--color-primary);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>สุขกันเถอะเรา</h1>
+  <div class="search-wrapper">
+    <!-- Style Selection Dropdown inside Search Bar -->
+    <details class="style-dropdown" id="styleDropdownWrapper" title="Click to expand or collapse the dance style list">
+      <summary id="currentStyleLabel">Electric Slide</summary>
+      <ul class="style-menu" id="styleList">
+        <li class="style-item" onclick="showStyle('cheyenne', this)">🤠 Cheyenne</li>
+        <li class="style-item" onclick="showStyle('achybreakyheart', this)">🤠 Achy Breaky Heart</li>
+        <li class="style-item" onclick="showStyle('cottonfield', this)">🥳 Cotton Field</li>
+        <li class="style-item" onclick="showStyle('handsup', this)">🎸 Hands Up</li>
+        <li class="style-item" onclick="showStyle('jerusalema', this)">🎸 Jerusalema</li>
+        <li class="style-item" onclick="showStyle('lindishuffle', this)">💜 Lindi Shuffle</li>
+        <li class="style-item" onclick="showStyle('tushpush', this)">🤠 Tush Push</li>
+        <li class="style-item" onclick="showStyle('alwaysremember', this)">🥳 Always Remember Us</li>
+        <li class="style-item" onclick="showStyle('stepandstomp', this)">🤠 Step & Stomp</li>
+        <li class="style-item" onclick="showStyle('summernightchacha', this)">💃 Summer Night Cha Cha</li>
+        <li class="style-item" onclick="showStyle('southernsoul', this)">🐴 Southern Soul</li>
+        <li class="style-item" onclick="showStyle('chillychacha', this)">💃 Chilly Cha Cha</li>
+        <li class="style-item" onclick="showStyle('texasstomp', this)">🤠 Texas Stomp</li>
+        <li class="style-item" onclick="showStyle('marryyou', this)">💜 Marry You</li>
+        <li class="style-item" onclick="showStyle('cherryblossomcha', this)">💃 Cherry Blossom Cha Cha</li>
+        <li class="style-item" onclick="showStyle('beautifulsunday', this)">🥳 Beautiful Sunday</li>
+        <li class="style-item" onclick="showStyle('sexbomb', this)">🥳 Sex Bomb</li>
+        <li class="style-item" onclick="showStyle('bootscootinboogie', this)">🤠 Boot Scootin Boogie</li>
+        <li class="style-item" onclick="showStyle('honkytonkstomp', this)">🤠 Honky Tonk Stomp</li>
+        <li class="style-item" onclick="showStyle('honeyilied', this)">🤠 Honey I Lied</li>
+        <li class="style-item" onclick="showStyle('justonelook', this)">💜 Just One Look</li>
+        <li class="style-item" onclick="showStyle('letstwistagain', this)">🥳 Lets Twist Again</li>
+        <li class="style-item" onclick="showStyle('sexbombk', this)">🥳 Sex Bomb Korean Version</li>
+        <li class="style-item" onclick="showStyle('sexbombr', this)">🥳 Sex Bomb Rose Beth Version</li>
+        <li class="style-item" onclick="showStyle('hillbillyrockhillbillyroll', this)">🥳 Hillbilly Rock Hillbilly Roll</li>
+        <li class="style-item" onclick="showStyle('warmupcooldown', this)">🔰 เต้นไก่ Warm Up & Cool Down</li>
+        <li class="style-item" onclick="showStyle('electricslide', this)">🔰💜 Electric Slide</li>
+        <li class="style-item" onclick="showStyle('bartenderstomp', this)">🔰🐴 Bartender Stomp</li>
+        <li class="style-item" onclick="showStyle('cowboymadison', this)">🔰🤠 Cowboy Madison</li>
+        <li class="style-item" onclick="showStyle('cowboyboogie', this)">🔰💜 Cowboy Boogie</li>
+        <li class="style-item" onclick="showStyle('stompingitout', this)">🔰🐴 Stomping It Out</li>
+        <li class="style-item" onclick="showStyle('afterfivestomp', this)">🔰🐴 After Five Stomp</li>
+        <li class="style-item" onclick="showStyle('straycatstrut', this)">🔰🥳 Stray Cat Strut</li>
+        <li class="style-item" onclick="showStyle('lemadison', this)">Le Madison</li>
+        <li class="style-item" onclick="showStyle('salsa', this)">Salsa</li>
+        <li class="style-item" onclick="showStyle('crytome', this)">Cry to Me</li>
+      </ul>
+    </details>
+
+    <input type="text" id="searchInput" class="search-box" placeholder="Search..." oninput="filterStyles()" aria-label="Search dance styles" />
+    <button id="clearBtn" class="clear-btn" onclick="clearSearch()" aria-label="Clear search">&times;</button>
+
+    <!-- Quick Tags Dropdown -->
+    <details class="tag-dropdown" id="tagMenuWrapper">
+      <summary title="Quick Tags">🏷️</summary>
+      <div class="tag-menu">
+        <button class="tag-option" onclick="insertTag('🔰')">🔰 Basic</button>
+        <button class="tag-option" onclick="insertTag('💃')">💃 Latin</button>
+        <button class="tag-option" onclick="insertTag('🐴')">🐴 Southern Soul</button>
+        <button class="tag-option" onclick="insertTag('🤠')">🤠 Country-Western</button>
+        <button class="tag-option" onclick="insertTag('🎸')">🎸 Modern Inter</button>
+        <button class="tag-option" onclick="insertTag('💜')">💜 Soul Urban R&B</button>
+        <button class="tag-option" onclick="insertTag('🥳')">🥳 Pop/Party</button>
+      </div>
+    </details>
+  </div>
+</header>
+
+  <div class="container">
+    <!-- Right Panel (Left panel is removed to save Vertical Space): Practice Videos & Music -->
+    <div class="panel">
+      <h2>Tutorials & Music</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 45%;">STYLE</th>
+              <th style="width: 55%;">SONGS</th>
+            </tr>
+          </thead>
+          <tbody id="danceTableBody">
+            <!-- Dynamic Content loaded via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sharedLineDanceSongs = [
+      { title: "Girl Just Want to Have Fun", url: "https://youtu.be/PIb6AZdTr-A&t=7" },
+      { title: "Go", url: "https://youtu.be/T5PaIFHQpvg" },
+      { title: "Beat it ", url: "https://youtu.be/YiIUzWfc6NM" },
+      { title: "Billie Jean ", url: "https://www.youtube.com/watch?v=QRidtXn0u7k" },
+      { title: "Hate Myself for Loving You", url: "https://www.youtube.com/watch?v=QC1cLqhuaZU" },
+      { title: "Sex Bomb", url: "https://youtu.be/WZ32gSLNHfA" },
+      { title: "Iron Horse", url: "https://www.youtube.com/watch?v=gQNfB7t74tY" },
+      { title: "Can't Take My Eyes Off You", url: "https://youtu.be/BT4GIljqr-A" },
+    ];    
+    const danceData = {
+      electricslide: {
+        name: "Electric Slide",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/3NZzmkxHVRY?t=3" }
+        ],
+        steps: [
+          "Grapevine ไปทางขวา จบที่ touch ด้วยเท้าซ้าย พร้อมตบมือ).",
+          "Grapevine ไปทางซ้าย จบที่ touch ด้วยเท้าขวา พร้อมตบมือ).",
+          "       ---- ❤️ จบ Section 1 ❤️ --",
+          "ก้าวถอยหลัง 3 steps (ขวา ซ้าย ขวา), touch ด้วยเท้าซ้าย.",
+          "ก้าวเท้าซ้ายไปข้างหน้า, touch ด้วยเท้าขวา, ถอยเท้าขวามาข้างหลัง, touch ด้วยเท้าซ้าย",
+          "       ---- ❤️ จบ Section 2 ❤️ --",
+          "ก้าวเท้าซ้ายพร้อมหมุนตัว 90 องศาไปทางซ้าย, ก้าวเท้าขวาตามไป scuff"
+        ],
+        songs: sharedLineDanceSongs
+      },
+      lemadison: {
+        name: "Le Madison",
+        tutorials: [
+          { label: "สอนเต้น", url: "https://youtu.be/e_dwV18q5fk" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Grapevine Right & Left (French Electric Slide)</strong>" +
+          "1-4: Step R to side, cross L behind R, step R to side, touch L beside R<br>" +
+          "5-8: Step L to side, cross R behind L, step L to side, touch R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Walk Back & Signature Turn-Skip</strong>" +
+          "1-4: Walk back R, L, R, touch L beside R<br>" +
+          "5-8: Step L forward, hitch R knee with ¼ turn left, step R back, touch L beside R</div>"
+        ],
+        songs: sharedLineDanceSongs
+      },
+      salsa: {
+        name: "Salsa",
+        tutorials: [
+          { label: "Basic Steps", url: "https://www.youtube.com/results?search_query=salsa+basic+step+tutorial" },
+          { label: "Partner Practice", url: "https://www.youtube.com/results?search_query=salsa+partnerwork+practice" }
+        ],
+        steps: [
+          "Step left foot forward, shift weight, recover on right.",
+          "Step left foot back to center and pause.",
+          "Step right foot backward, shift weight, recover on left.",
+          "Step right foot back to center and pause."
+        ],
+        songs: [
+          { title: "Llorarás - Oscar D'León", url: "https://www.youtube.com/results?search_query=Lloraras+Oscar+DLeón" },
+          { title: "Valió la Pena - Marc Anthony", url: "https://www.youtube.com/results?search_query=Valio+la+Pena+Marc+Anthony" }
+        ]
+      },
+      bartenderstomp: {
+        name: "Bartender Stomp",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/3fH1_G2t8tU" }
+        ],
+        steps: [
+          "Grapevine Right with Claps & Grapevine Left ไม่ตบมือ",
+          "       ---- ❤️ จบ Section 1 ❤️ --",
+          "ก้าวถอยหลัง 3 steps (ขวา ซ้าย ขวา), touch ด้วยเท้าซ้าย.",
+          "ก้าวเท้าซ้ายไปข้างหน้า, touch ด้วยเท้าขวา, ถอยเท้าขวามาข้างหลัง, touch ด้วยเท้าซ้าย",
+          "       ---- ❤️ จบ Section 2 ❤️ --",
+          "ก้าวเท้าซ้ายไปข้างหน้า นับ 1&2, ก้าวขวาตามมา Stomp ข้างๆเท้าซ้าย 2 ครั้ง", 
+          "ถอยเท้าขวา, ถอยเท้าซ้าย มา stomp ข้างเท้าขวา",
+          "ก้าวเท้าซ้ายพร้อมหมุนตัว 90 องศาไปทางซ้าย, ก้าวเท้าขวาตามไป scuff",
+          "       ---- ❤️ จบ Section 3 ❤️ --"
+        ],
+        songs: sharedLineDanceSongs
+      },
+      cowboymadison: {
+        name: "Cowboy Madison",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/_70HmwvIPo4" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Forward Heel Struts & Back Walks</strong>" +
+          "1-2: Touch R heel forward, drop R toe<br>" +
+          "3-4: Touch L heel forward, drop L toe<br>" +
+          "5-8: Walk back R, L, R, touch L beside R</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Side Step-Touches & ¼ Turn Jazz Box</strong>" +
+          "1-2: Step L to side, touch R beside L & clap<br>" +
+          "3-4: Step R to side, touch L beside R & clap<br>" +
+          "5-8: Cross L over R, step R back, turn ¼ left stepping L side, step R beside L</div>"
+        ],
+        songs: sharedLineDanceSongs
+      },
+      cowboyboogie: {
+        name: "Cowboy Boogie",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/nMlP6XGPEno" }
+        ],
+        steps: [
+          "Side Walks (Right & Left) with Touches",
+          "Side Touches, Front Kick, & Double Stomps",
+          "Forward Shuffles & Half-Pivot Turnarounds",
+          "The Hip Boogie & Turning Jazz Box"
+        ],
+        songs: sharedLineDanceSongs
+      },
+      stompingitout: {
+        name: "Stomping It Out",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/7K5_m8BPwAg" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Stomp-Hold Right & Left with Claps</strong>" +
+          "1-2: Stomp R to right side, hold (or clap)<br>" +
+          "3-4: Stomp L to left side, hold (or clap)<br>" +
+          "5-8: Hip bumps R, L, R, L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Grapevine Right & Grapevine Left ¼ Turn</strong>" +
+          "1-4: Step R to side, step L behind, step R to side, touch L<br>" +
+          "5-8: Step L to side, step R behind, ¼ turn left stepping L forward, touch R</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Forward Step-Slide-Step-Stomp & Heel Splits</strong>" +
+          "1-4: Step R forward, slide L to R, step R forward, stomp L beside R<br>" +
+          "5-8: Raise heels up/down, split heels out and together</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Back Walks with Stomps & Heel Swivels</strong>" +
+          "1-4: Walk back R, L, R, stomp L beside R<br>" +
+          "5-8: Swivel heels left, right, left, back to center</div>"
+        ],
+        songs: sharedLineDanceSongs
+      },
+      afterfivestomp: {
+        name: "After Five Stomp",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/oq_V7LgI5Sc" }
+        ],
+        steps: [
+          "Toe Fans, Right Swivels, & Left Stomp",
+          "Toe Fans, Left Swivels, & Right Stomp",
+          "Side Stomps & Right Vine with ½ Turn",
+          "Left Vine, Right Vine with ¼ Turn"
+        ],
+        songs: sharedLineDanceSongs
+      },
+      straycatstrut: {
+        name: "Stray Cat Strut",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/huoF29UCzsE" }
+        ],
+        steps: [
+          "Alternating Heel Touches",
+          "Multi Heel-Toe Switches",
+          "Forward Heel Struts",
+          "Turning Jazz Box & Standard Jazz Box"
+        ],
+        songs: sharedLineDanceSongs
+      },
+      warmupcooldown: {
+        name: "Warm Up & Cool Down",
+        tutorials: [
+          { label: "เต้นไก่", url: "https://youtu.be/watch?v=l5sIspLfmXM" }
+        ],
+        steps: [
+          "ช่วยเรื่องท่าทางการเต้น การทรงต้ว,",
+          "ยืดกล้ามเนื้อ,ลดโอกาสในการบาดเจ็บ,",
+          "เพิ่มความคล่องตัว ความยืดหยุ่นของร่างกาย,",
+          "ขยันซ้อมเต้นนะครับ สนุกไปด้วยกัน ❤️ ",
+        ],
+        songs: [
+          { title: "Booky Warm Up", url: "https://www.youtube.com/watch?v=Um3sXrKvUpM" },
+          { title: "Cool Down", url: "https://www.youtube.com/watch?v=eWtnxOgV4S0" }
+        ]
+      },      
+      tushpush: {
+        name: "Tush Push",
+        tutorials: [
+          { label: "สอนเต้น", url: "https://youtu.be/pTi_qc8jON4" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Right & Left Heel Taps</strong>" +
+          "1-4: Touch R heel forward (x2 or 4), step R beside L<br>" +
+          "5-8: Touch L heel forward (x2 or 4), step L beside R</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Heel Switches & Hip Bumps</strong>" +
+          "9&10&: Touch R heel forward, step R home, touch L heel forward, step L home<br>" +
+          "11-12: Touch R heel forward, clap<br>" +
+          "13-16: Bump hips R twice, bump hips L twice</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Hip Swivels & Forward Cha-Cha</strong>" +
+          "17-20: Bump hips R, L, R, L<br>" +
+          "21&22: Step R forward, step L beside R, step R forward<br>" +
+          "23-24: Rock L forward, recover R</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Back Cha-Cha, Half-Turn Cha-Chas</strong>" +
+          "25&26: Step L back, step R beside L, step L back<br>" +
+          "27-28: Rock R back, recover L<br>" +
+          "29&30: Forward shuffle R-L-R turning ½ right<br>" +
+          "31-32: Step L forward, pivot ½ turn right</div>",
+
+          "<div class='step-section'><strong>[Counts 33-40] Half-Turn Cha-Cha, ¼ Turn & Stomp Clap</strong>" +
+          "33&34: Forward shuffle L-R-L turning ½ left<br>" +
+          "35-36: Step R forward, pivot ½ turn left<br>" +
+          "37-38: Step R forward, turn ¼ left<br>" +
+          "39-40: Stomp R beside L, clap</div>"
+        ],
+        songs: [
+          { title: "เต้นไลน์แด๊นซ์", url: "https://youtu.be/DloBfqzUdP8" },
+          { title: "Hate Myself for Loving you", url: "https://www.youtube.com/watch?v=QC1cLqhuaZU" },
+          { title: "Pepito", url: "https://youtu.be/7lGJA5N1qbQ" },
+          { title: "ผู้ชายในฝัน", url: "https://youtu.be/e2O2L6yLR5A" },
+          { title: "วอนลมฝากรัก", url: "https://youtu.be/J7xRH3vkLU8" }
+        ]
+      },
+      alwaysremember: {
+        name: "Always Remember Us",
+        tutorials: [
+          { label: "ใช้ Chrome", url: "https://drive.google.com/file/d/1GlN2EQ_Djjeno51W2LOVp1Em30Hqj5kR/view?usp=sharing" },
+          { label: "Browser อื่น", url: "https://drive.google.com/file/d/1GlN2EQ_Djjeno51W2LOVp1Em30Hqj5kR/view?usp=sharing" }
+        ],
+        steps: [
+          "<div class='step-section'>รอ Stepsheet จากครูแหม่ม<br>" +
+          "คลิปสอนอยู่บน Google Drive, Chrome Browser กดแล้วคลิปเล่นได้เลย<br>" +
+          "Browser ตัวอื่นๆ ต้อง download มาก่อน แล้วเล่นจากเครื่องตัวเองครับ</div>"
+        ],
+        songs: [
+          { title: "Always Remember Us - Korea", url: "https://youtu.be/zEO5igoY_ew" },
+          { title: "Black Magic Woman", url: "https://youtu.be/kHkGmnQatq0" },
+          { title: "Sha La La", url: "https://youtu.be/WLZteTO2efI" }
+        ]      
+      },
+      stepandstomp: {
+        name: "Step & Stomp",
+        tutorials: [
+          { label: "สอน", url: "https://youtu.be/XfKWvRtIL7U" },
+          { label: "ซ้อมเต้น", url: "https://youtu.be/BsxhG9NMSvE" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] RDiagStep-Stomps Forward</strong>" +
+          "Counts 1-2: Step right foot diagonally forward to the right, stomp left foot directly next to right (no weight).<br>" +
+          "Counts 3-4: Step left foot diagonally forward to the left, stomp right foot directly next to left (no weight).<br>" +
+          "Counts 5-8: Repeat the forward progression: Step-stomp right diagonal, Step-stomp left diagonal.</div>",
+
+          "<div class='step-section'><strong>Diagonal Step-Stomps Backward</strong>" +
+          "Counts 1-2: Step right foot diagonally backward to the right, stomp left foot directly next to right.<br>" +
+          "Counts 3-4: Step left foot diagonally backward to the left, stomp right foot directly next to left.<br>" +
+          "Counts 5-8: Repeat the backward retreat: Step-stomp right diagonal, Step-stomp left diagonal.</div>",
+
+          "<div class='step-section'><strong>Vine Right & Vine Left</strong>" +
+          "Counts 1-4: Step right to side, cross left behind, step right to side, stomp left next to right.<br>" +
+          "Counts 5-8: Step left to side, cross right behind, step left to side, stomp right next to left.</div>",
+
+          "<div class='step-section'><strong>Section 4: 4-Count Jazz Box with a ¼ Turn Turning Left</strong>" +
+          "Counts 1-2: Cross right foot over left, step back on your left foot.<br>" +
+          "Counts 3-4: Step right to the side while making a ¼ turn left, stomp left next to right to finish.<br>" +
+          "Counts 5-8: Complete four static stomps alternating Right, Left, Right, Left in place with heavy styling.</div>"
+        ],
+        songs: [
+          { title: "Step & Stomp", url: "https://youtu.be/8xDOOK1NhAU" },
+          { title: "ขอให้เหมือนเดิม", url: "https://youtu.be/n8ueKBAXi94?t=30" },
+          { title: "Man in The Mirror", url: "https://youtu.be/Z9NYDgbKsBE" },
+          { title: " ไทดำรำพัน", url: "https://youtu.be/OvhPrJpGRSI" }
+        ]      
+      },
+      achybreakyheart: {
+        name: "Achy Breaky Heart",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://www.youtube.com/watch?v=IJoIaYUrJdk&t=4s" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Vine Right, Touch & Vine Left ¼ Turn, Scuff</strong>" +
+          "1-4: Step R side, step L behind, step R side, touch L beside R<br>" +
+          "5-8: Step L side, step R behind, turn ¼ left stepping L forward, scuff R</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Rocking Chair & Jazz Box</strong>" +
+          "1-4: Rock R forward, recover L, rock R back, recover L<br>" +
+          "5-8: Cross R over L, step L back, step R side, step L forward</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Diagonal Step-Touches with Claps</strong>" +
+          "1-2: Step R forward diagonal, touch L beside R & clap<br>" +
+          "3-4: Step L back diagonal, touch R beside L & clap<br>" +
+          "5-6: Step R back diagonal, touch L beside R & clap<br>" +
+          "7-8: Step L forward diagonal, touch R beside L & clap</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Hip Bumps R & L, Swivel Heels</strong>" +
+          "1-4: Bump hips right twice, bump hips left twice<br>" +
+          "5-8: Swivel heels right, left, right, center</div>"
+        ],
+        songs: [
+          { title: "Achy Breaky Heart", url: "https://youtu.be/QOn24oRtJMQ" }
+        ]      
+      },
+      southernsoul: {
+        name: "Southern Soul",
+        tutorials: [
+          { label: "สอน", url: "https://youtu.be/UqV3-ZT8fk0" },
+          { label: "ซ้อมเต้น", url: "https://youtu.be/6mfjWtBwvmg" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Hip Bumps, Back-Side-Cross & Left Lindy Step</strong>" +
+          "1&2: Bump L hip left, R right, L left<br>" +
+          "3&4: Step R back, step L side, cross R over L<br>" +
+          "5&6: Side chasse left (L-R-L)<br>" +
+          "7-8: Rock back R, recover L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Hip Bumps, Back-Side-Cross & Right Lindy Step</strong>" +
+          "1&2: Bump R hip right, L left, R right<br>" +
+          "3&4: Step L back, step R side, cross L over R<br>" +
+          "5&6: Side chasse right (R-L-R)<br>" +
+          "7-8: Rock back L, recover R</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Mambo Touches, Rocking Chair & Forward Mambo</strong>" +
+          "1&2: Step L side, recover R, step L forward<br>" +
+          "3&4: Step R side, recover L, step R forward<br>" +
+          "5&6&: Rock forward L, recover R, rock back L, recover R<br>" +
+          "7&8: Step L forward, recover R, step L back</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Back Pony Steps, Rock-Hitch & ¼ Pivot Cross</strong>" +
+          "1&2: Step R back, touch ball of L beside R, step R in place<br>" +
+          "3&4: Step L back, touch ball of R beside L, step L in place<br>" +
+          "5-6: Step R back with L hitch, recover L<br>" +
+          "7&8: Step R forward, pivot ¼ left, cross R over L</div>"
+        ],
+        songs: [
+          { title: "Southern Soul", url: "https://youtu.be/a0Rys7GvmcQ" },
+          { title: "ไทดำรำพัน", url: "https://youtu.be/OvhPrJpGRSI" }
+        ]      
+      },
+      cottonfield: {
+        name: "Cotton Field",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://www.youtube.com/watch?v=PKBcqCPwLrU&t=3s" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Right Chasse, Back Rock & Left Chasse, Back Rock</strong>" +
+          "1&2: Step R side, step L beside R, step R side<br>" +
+          "3-4: Rock L back, recover R<br>" +
+          "5&6: Step L side, step R beside L, step L side<br>" +
+          "7-8: Rock R back, recover L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Toe Struts Forward & Rocking Chair</strong>" +
+          "1-2: Touch R toe forward, drop R heel<br>" +
+          "3-4: Touch L toe forward, drop L heel<br>" +
+          "5-8: Rock R forward, recover L, rock R back, recover L</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] ¼ Pivot Turn Left & Weave Left</strong>" +
+          "1-2: Step R forward, pivot ¼ turn left<br>" +
+          "3-4: Cross R over L, step L to side<br>" +
+          "5-6: Step R behind L, step L to side<br>" +
+          "7-8: Cross R over L, hold</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Side Mambo Steps & Forward Walks</strong>" +
+          "1&2: Rock L to side, recover R, step L beside R<br>" +
+          "3&4: Rock R to side, recover L, step R beside L<br>" +
+          "5-8: Walk forward L, R, L, touch R beside L</div>"
+        ],
+        songs: [
+          { title: "Cotton Field", url: "https://youtu.be/PKBcqCPwLrU" },
+          { title: "ริมฝั่งน้ำ", url: "https://youtu.be/urRczHZrcLs" },
+          { title: "รักที่หลุดลอย", url: "https://youtu.be/uKtZIFZ7VfU" },
+        ]      
+      },
+      cheyenne: {
+        name: "Cheyenne",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://www.youtube.com/watch?v=XCcDv4uEGo0&t=3s" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Grapevine Right & Grapevine Left</strong>" +
+          "1-4: Step R to side, step L behind R, step R to side, touch L beside R<br>" +
+          "5-8: Step L to side, step R behind L, step L to side, touch R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Forward Walk with Kick & Back Walk with Touch</strong>" +
+          "1-3: Walk forward R, L, R<br>" +
+          "4: Kick L forward & clap<br>" +
+          "5-7: Walk back L, R, L<br>" +
+          "8: Touch R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Heel Switches & Forward Step-Pivots</strong>" +
+          "1-2: Touch R heel forward, step R home<br>" +
+          "3-4: Touch L heel forward, step L home<br>" +
+          "5-6: Step R forward, pivot ¼ turn left (weight on L)<br>" +
+          "7-8: Step R forward, pivot ¼ turn left (weight on L)</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Stomps, Heel Bumps & Hips</strong>" +
+          "1-2: Stomp R to side, stomp L beside R<br>" +
+          "3-4: Bump hips right, bump hips left<br>" +
+          "5-8: Bump hips R, L, R, L</div>"
+        ],
+        songs: [
+          { title: "ขอให้เหมือนเดิม", url: "https://youtu.be/n8ueKBAXi94?si=b9ybl3GClxyCt8R9" },
+          { title: "I Feel Lucky", url: "https://youtu.be/FHNwEV3cMZw" }
+        ]      
+      },
+      cherryblossomcha: {
+        name: "Cherry Blossom Cha Cha",
+        tutorials: [
+          { label: "สอน", url: "https://youtu.be/RQD0ZKuzD28" },
+          { label: "ซ้อมเต้น", url: "https://youtu.be/72ZubXPfU8o" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Side Steps & Side Cha-Chas</strong>" +
+          "1-2: Step R to right side, step L beside R<br>" +
+          "3&4: Side cha-cha right (R-L-R)<br>" +
+          "5-6: Step L to left side, step R beside L<br>" +
+          "7&8: Side cha-cha left (L-R-L)</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Rock Forward, Back Cha-Cha & Rock Back, Forward Cha-Cha</strong>" +
+          "1-2: Rock forward R, recover L<br>" +
+          "3&4: Back cha-cha (R-L-R)<br>" +
+          "5-6: Rock back L, recover R<br>" +
+          "7&8: Forward cha-cha (L-R-L)</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Pivot ½ Turn & Forward Cha-Cha (x2)</strong>" +
+          "1-2: Step R forward, pivot ½ turn left<br>" +
+          "3&4: Forward cha-cha (R-L-R)<br>" +
+          "5-6: Step L forward, pivot ½ turn right<br>" +
+          "7&8: Forward cha-cha (L-R-L)</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Jazz Box ¼ Turn Right & Hip Bumps</strong>" +
+          "1-4: Cross R over L, turn ¼ right stepping L back, step R side, step L beside R<br>" +
+          "5-8: Bump hips R, L, R, L</div>"
+        ],
+        songs: [
+          { title: "Cherry Pink & Apple Blossom White", url: "https://youtu.be/q_86hrZHs5k" }
+        ]      
+      },
+      beautifulsunday: {
+        name: "Beautiful Sunday",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/5EFG3rmLFNY" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Front Shuffles & Rock-Recovers</strong>" +
+          "1&2: Forward shuffle (R-L-R)<br>" +
+          "3-4: Rock forward L, recover R<br>" +
+          "5&6: Back shuffle (L-R-L)<br>" +
+          "7-8: Rock back R, recover L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Side Walks Right & Left with Touches</strong>" +
+          "1-4: Step R to side, step L beside R, step R to side, touch L<br>" +
+          "5-8: Step L to side, step R beside L, step L to side, touch R</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Forward Toe Struts & Back Walks</strong>" +
+          "1-2: Touch R toe forward, drop R heel<br>" +
+          "3-4: Touch L toe forward, drop L heel<br>" +
+          "5-8: Walk back R, L, R, touch L beside R</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Turning Jazz Box & Continuous Hips</strong>" +
+          "1-4: Cross L over R, turn ¼ left stepping R back, step L side, step R beside L<br>" +
+          "5-8: Bump hips L, R, L, R</div>"
+        ],
+        songs: [
+          { title: "Beautiful Sunday", url: "https://youtu.be/exjLe4xQsE8" }
+        ]      
+      },
+      handsup: {
+        name: "Hands Up",
+        tutorials: [
+          { label: "สอน", url: "https://youtu.be/AlQPduSp9Rg" },
+          { label: "ซ้อมเต้น", url: "https://youtu.be/VS7gIAiPt3E" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Out-Out Forward, In-In Back & Hip Swivels</strong>" +
+          "1-2: Step R forward diagonal, step L forward diagonal<br>" +
+          "3-4: Step R back to center, step L beside R<br>" +
+          "5-8: Roll hips in a circle R to L twice</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Forward Shuffle, ½ Pivot Turn & Forward Shuffle, ½ Pivot Turn</strong>" +
+          "1&2: Forward shuffle (R-L-R)<br>" +
+          "3-4: Step L forward, pivot ½ turn right<br>" +
+          "5&6: Forward shuffle (L-R-L)<br>" +
+          "7-8: Step R forward, pivot ½ turn left</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Side Cha-Chas & Cross Rocks</strong>" +
+          "1-2: Cross rock R over L, recover L<br>" +
+          "3&4: Side chasse right (R-L-R)<br>" +
+          "5-6: Cross rock L over R, recover R<br>" +
+          "7&8: Side chasse left (L-R-L)</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] ¼ Turning Jazz Box & Hand Raises</strong>" +
+          "1-4: Cross R over L, turn ¼ right stepping L back, step R side, step L forward<br>" +
+          "5-6: Raise right hand up, raise left hand up<br>" +
+          "7-8: Wave hands twice overhead</div>"
+        ],
+        songs: [
+          { title: "Hands Up", url: "https://youtu.be/YTBM7oBEO6k" }
+        ]      
+      },
+      sexbomb: {
+        name: "Sex Bomb",
+        tutorials: [
+          { label: "สอนเต้น", url: "https://drive.google.com/file/d/1iJ57P6j11Zv_E757oAu-Ay1-7zktUSv7/view?usp=sharing" }
+        ],
+        steps: [
+          "รอ steps จากครูแหม่ม ",
+          "Side Step, Close, Side Shuffle, & Hip/Knee Circles",
+          "½ Turning Chassé, Side Rock, Right Side Shuffle, & Back Rock",
+          "Side Step, Touch, Monterey Turn, Stomp, & Kick",
+          "Back Walk, Coaster Step, & Quarter-Pivot Cross"
+        ],
+        songs: [
+          { title: "Sex Bomb", url: "https://youtu.be/WZ32gSLNHfA" }
+        ]      
+      },
+      bootscootinboogie: {
+        name: "Boot Scootin Boogie",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/GyiXxkpRRIY" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Grapevine Right, Heel Swivels & Grapevine Left</strong>" +
+          "1-4: Step R side, step L behind R, step R side, touch L<br>" +
+          "5-8: Step L side, step R behind L, step L side, touch R</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Heel Switches & Forward Step-Pivots</strong>" +
+          "1-4: Touch R heel forward, step R home, touch L heel forward, step L home<br>" +
+          "5-8: Step R forward, pivot ½ turn left, step R forward, pivot ½ turn left</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Heel Struts & Stomp-Swivels</strong>" +
+          "1-4: Touch R heel forward, drop toe, touch L heel forward, drop toe<br>" +
+          "5-8: Stomp R forward, swivel heels right, left, center</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Back Walks & ¼ Turn Stomp</strong>" +
+          "1-4: Walk back R, L, R, touch L<br>" +
+          "5-8: Step L forward, turn ¼ right, stomp R beside L, clap</div>"
+        ],
+        songs: [
+          { title: "Boot Scootin Boogie", url: "https://youtu.be/Qv8w8vtGnjI" }
+        ]      
+      },
+      chillychacha: {
+        name: "Chilly Cha Cha",
+        tutorials: [
+          { label: "สอน", url: "https://youtu.be/Ox4rQXsQXPs" },
+          { label: "ซ้อมเต้น", url: "https://youtu.be/nUOMU__3RQ0" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Side Steps & Side Cha-Chas</strong>" +
+          "1-2: Step R to right side, step L beside R<br>" +
+          "3&4: Side cha-cha right (R-L-R)<br>" +
+          "5-6: Step L to left side, step R beside L<br>" +
+          "7&8: Side cha-cha left (L-R-L)</div>",
+      
+          "<div class='step-section'><strong>[Counts 9-16] Forward/Back Rocks & Cha-Chas</strong>" +
+          "1-2: Rock forward R, recover L<br>" +
+          "3&4: Back cha-cha (R-L-R)<br>" +
+          "5-6: Rock back L, recover R<br>" +
+          "7&8: Forward cha-cha (L-R-L)</div>",
+      
+          "<div class='step-section'><strong>[Counts 17-24] ½ Pivots & Forward Cha-Chas</strong>" +
+          "1-2: Step forward R, pivot ½ turn left<br>" +
+          "3&4: Forward cha-cha (R-L-R)<br>" +
+          "5-6: Step forward L, pivot ½ turn right<br>" +
+          "7&8: Forward cha-cha (L-R-L)</div>",
+      
+          "<div class='step-section'><strong>[Counts 25-32] Jazz Box ¼ Turn Right & Hip Bumps</strong>" +
+          "1-2: Cross R over L, step back L making ¼ turn right<br>" +
+          "3-4: Step side R, step L beside R<br>" +
+          "5-8: Feet slightly apart, bump hips R, L, R, L</div>"
+        ],
+        songs: [
+          { title: "Chilly Cha Cha - Jessica Jay", url: "https://youtu.be/1uwTExhWv-M" },
+          { title: "คลิปสอนและซ้อมเต้น K 1", url: "https://youtu.be/Er-rdfd4KC0" },
+          { title: "คลิปซ้อมเต้น Korea 2", url: "https://youtu.be/Mk3tcoxLyDQ" },
+          { title: "Search Youtube", url: "https://www.youtube.com/results?search_query=Chilly+Cha+Cha+Jessica+Jay" }
+        ]
+      },
+      jerusalema: {
+        name: "Jerusalema",
+        tutorials: [
+          { label: "สอน", url: "https://youtu.be/Ktvq0hG7ATo" },
+          { label: "ซ้อมเต้น", url: "https://youtu.be/OUnivK_62QA" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Stomp Left & Right with Heel Bounces</strong>" +
+          "1-4&: Stomp L forward diagonal, bounce heel 3 times, ball-step L beside R<br>" +
+          "5-8&: Stomp R forward diagonal, bounce heel 3 times, ball-step R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Heel Switches & ¼ Turn Left Side Walk</strong>" +
+          "1&2&3&4&: Heel switches L, R, L, R<br>" +
+          "5-8: Turn ¼ left crossing L over R, step R side, cross L over R, step R side</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Toe Touch & Walk Left, Toe Touch & Walk Back</strong>" +
+          "1-4: Touch L toe left, walk L, R, L (angled left)<br>" +
+          "5-8: Touch R toe forward, walk back R, L, R (square to wall)</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Side-Hold-Ball-Side-Touch Claps (L & R)</strong>" +
+          "1-2&3-4: Step L side, hold, ball step R beside L, step L side, touch R & clap<br>" +
+          "5-8: Step R side, step L beside R, step R side, touch L & clap</div>"
+        ],
+        songs: [
+          { title: "Jerusalema", url: "https://youtu.be/vqxeMMAgatw" },
+          { title: "Airline version", url: "https://youtu.be/_54TfScB2j8?list=RD_54TfScB2j8&t=11" },
+          { title: "Short version", url: "https://youtube.com/shorts/DaCFsdT1Qjg?si=tztJbyhyAq6ioSAH" },
+          { title: "French/Hebrew at location", url: "https://youtu.be/Whhq6TlBelc?list=RDWhhq6TlBelc&t=7" },
+          { title: "Search Youtube", url: "https://www.youtube.com/results?search_query=Jerusalema" }
+        ]
+      },
+      texasstomp: {
+        name: "Texas Stomp",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/CxeeEaLwjps" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Texas Heel-Toe Strut Walk Forward</strong>" +
+          "1-2: Touch R heel forward, drop R toe<br>" +
+          "3-4: Touch L heel forward, drop L toe<br>" +
+          "5-6: Touch R heel forward, drop R toe<br>" +
+          "7-8: Touch L heel forward, drop L toe</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Vine Right & Vine Left ¼ Turn with Stomp</strong>" +
+          "1-4: Step R side, step L behind, step R side, touch L<br>" +
+          "5-8: Step L side, step R behind, ¼ turn left stepping L forward, stomp R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] K-Step Sequence with Heavy Claps</strong>" +
+          "1-2: Step R forward diagonal, touch L beside R & clap<br>" +
+          "3-4: Step L back diagonal, touch R beside L & clap<br>" +
+          "5-6: Step R back diagonal, touch L beside R & clap<br>" +
+          "7-8: Step L forward diagonal, touch R beside L & clap</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Stomp Swivels & ¼ Turning Jazz Box</strong>" +
+          "1-4: Stomp R forward, swivel heels R, L, center<br>" +
+          "5-8: Cross R over L, step L back, turn ¼ right step R side, step L beside R</div>"
+        ],
+        songs: [
+          { title: "I am from the country", url: "https://youtu.be/9GzCOEs5hmk" },
+          { title: "ควักหัวใจออกมา", url: "https://youtu.be/qBzI_93FmKg" },
+          { title: "A.P.T.", url: "https://youtu.be/ekr2nIex040" },
+          { title: "Chirpy Cheep Cheep", url: "https://youtu.be/qBzI_93FmKg" }
+        ]
+      },
+      marryyou: {                // https://youtu.be/MKbXKi8S1V8
+        name: "Marry You",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://www.youtube.com/watch?v=rb3-Z2LRxMw" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Forward Diagonal Touches & Heel Swivels</strong>" +
+          "1-2: Step R forward diagonal, touch L beside R & clap<br>" +
+          "3-4: Step L back diagonal, touch R beside L & clap<br>" +
+          "5-8: Swivel heels R, L, R, L (weight onto L)</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Back Diagonal Touches & Heel Swivels</strong>" +
+          "1-2: Step R back diagonal, touch L beside R & clap<br>" +
+          "3-4: Step L forward diagonal, touch R beside L & clap<br>" +
+          "5-8: Swivel heels R, L, R, L (weight onto L)</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Grapevine Right & Grapevine Left ¼ Turn</strong>" +
+          "1-4: Step R side, step L behind R, step R side, touch L<br>" +
+          "5-8: Step L side, step R behind L, ¼ turn left step L forward, scuff R</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Jazz Box ¼ Turn Right (x2)</strong>" +
+          "1-4: Cross R over L, ¼ turn right step L back, step R side, step L beside R<br>" +
+          "5-8: Cross R over L, ¼ turn right step L back, step R side, step L beside R</div>"
+        ],
+        songs: [
+          { title: "I wanna marry you", url: "https://youtu.be/dElRVQFqj-k" },
+          { title: "จะขอก็รีบขอ", url: "https://youtu.be/vtMS9TWPtZQ" },
+          { title: "เกรงใจ", url: "https://youtu.be/SI9H3dlf6nw" },
+          { title: "เพียงกระซิบ", url: "https://youtu.be/rgzNo-12ci0" }
+        ]
+      },
+      honkytonkstomp: {
+        name: "Honky Tonk Stomp",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/7hBCpRhZUMQ" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Stomp-Swivels Right & Left</strong>" +
+          "1-4: Stomp R forward diagonal, swivel heels R, L, center<br>" +
+          "5-8: Stomp L forward diagonal, swivel heels L, R, center</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Forward Walks with Kick & Back Walks with ¼ Turn</strong>" +
+          "1-4: Walk forward R, L, R, kick L forward & clap<br>" +
+          "5-8: Walk back L, R, L turning ¼ left, touch R beside L</div>"
+        ],
+        songs: [
+          { title: "Dance the Night Away", url: "https://youtu.be/z_mUZtrS3eQ" }
+        ]
+      },
+      justonelook: {
+        name: "Just One Look",
+        tutorials: [
+          { label: "สอน", url: "https://youtu.be/1Wo3bqVdCIw" },
+          { label: "ซ้อมเต้น", url: "https://youtu.be/RbWhyHvEW0s" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Forward Diagonal Step-Touches & Claps</strong>" +
+          "1-2: Step R forward right diagonal, touch L beside R & clap<br>" +
+          "3-4: Step L forward left diagonal, touch R beside L & clap<br>" +
+          "5-6: Step R forward right diagonal, touch L beside R & clap<br>" +
+          "7-8: Step L forward left diagonal, touch R beside L & clap</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Backward Diagonal Step-Touches & Claps</strong>" +
+          "1-2: Step R back right diagonal, touch L beside R & clap<br>" +
+          "3-4: Step L back left diagonal, touch R beside L & clap<br>" +
+          "5-6: Step R back right diagonal, touch L beside R & clap<br>" +
+          "7-8: Step L back left diagonal, touch R beside L & clap</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Grapevine Right & Grapevine Left</strong>" +
+          "1-2: Step R to side, step L behind R<br>" +
+          "3-4: Step R to side, touch L beside R<br>" +
+          "5-6: Step L to side, step R behind L<br>" +
+          "7-8: Step L to side, touch R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Rocking Chair & ¼ Pivot Turn</strong>" +
+          "1-2: Rock R forward, recover L<br>" +
+          "3-4: Rock R back, recover L<br>" +
+          "5-6: Step R forward, pivot ¼ turn left (weight onto L)<br>" +
+          "7-8: Stomp R beside L, stomp L in place</div>"
+        ],
+        songs: [
+          { title: "Just One Look", url: "https://youtu.be/yByUavdTy_U" }
+        ]
+      },
+      letstwistagain: {
+        name: "Lets Twist Again",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/OvlsQprZPOQ" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Toe-Heel-Cross Sugar Steps with Holds</strong>" +
+          "1-2: Swivel R toe in & touch, swivel R heel out & touch<br>" +
+          "3-4: Cross R over L, hold<br>" +
+          "5-6: Swivel L toe in & touch, swivel L heel out & touch<br>" +
+          "7-8: Cross L over R, hold</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] K-Step with Claps</strong>" +
+          "1-2: Step R forward diagonal, touch L beside R & clap<br>" +
+          "3-4: Step L back diagonal, touch R beside L & clap<br>" +
+          "5-6: Step R back diagonal, touch L beside R & clap<br>" +
+          "7-8: Step L forward diagonal, touch R beside L & clap</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Grapevine Right & Grapevine Left</strong>" +
+          "1-4: Step R to side, step L behind R, step R to side, touch L<br>" +
+          "5-8: Step L to side, step R behind L, step L to side, touch R</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Twist 4 & ¼ Turning Jazz Box</strong>" +
+          "1-4: Twist heels right, left, right, left (weight to L)<br>" +
+          "5-8: Cross R over L, step L back, turn ¼ right stepping R side, step L beside R</div>"
+        ],
+        songs: [
+          { title: "Lets Twist Again", url: "https://youtu.be/xncyDs1C8qY" }
+        ]
+      },      
+      lindishuffle: {
+        name: "Lindi Shuffle",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/C0RQwe3LaSc" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Right Lindy Step & Left Lindy Step</strong>" +
+          "1&2: Side chasse right (R-L-R)<br>" +
+          "3-4: Rock back L, recover R<br>" +
+          "5&6: Side chasse left (L-R-L)<br>" +
+          "7-8: Rock back R, recover L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Toe Struts & Kick-Ball-Changes</strong>" +
+          "1-2: Touch R toe forward, drop R heel<br>" +
+          "3-4: Touch L toe forward, drop L heel<br>" +
+          "5&6: Kick R forward, step ball of R beside L, step L in place<br>" +
+          "7&8: Kick R forward, step ball of R beside L, step L in place</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Forward Pivot Turns & Heel Switches</strong>" +
+          "1-2: Step R forward, pivot ¼ turn left<br>" +
+          "3-4: Step R forward, pivot ¼ turn left<br>" +
+          "5&6&: Touch R heel forward, step R home, touch L heel forward, step L home<br>" +
+          "7-8: Touch R heel forward, clap</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Jazz Box ¼ Turn Right with Stomps</strong>" +
+          "1-2: Cross R over L, step L back<br>" +
+          "3-4: Turn ¼ right stepping R to side, step L beside R<br>" +
+          "5-8: Stomp R, stomp L, bump hips R, L</div>"
+        ],
+        songs: [
+          { title: "I Need More of You", url: "https://youtu.be/3wEBVN28eqo" },
+          { title: "เชพบ๊ะ", url: "https://youtu.be/8qGyAmvZ0P0" },
+          { title: "คู่กัด", url: "https://youtu.be/bl8Z7wgP3oc" },
+          { title: "คิดมาก", url: "https://youtu.be/tSJcs6-dlxY" },
+          { title: "ฺฺฺBeautiful Sunday", url: "https://youtu.be/exjLe4xQsE8" },
+          { title: "Its so easy", url: "https://youtu.be/9JSn36U7d4w" },
+          { title: "Sway", url: "https://youtu.be/-h65LVfZfK4" },
+          { title: "Lady Bump", url: "https://youtu.be/0haMAl-Uc6U" }
+        ]
+      },
+      honeyilied: {
+        name: "Honey I Lied",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/SFPMOmm4kL8" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Chasse Right, Back Rock, Chasse Left, Back Rock</strong>" +
+          "1&2: Step R to right side, step L beside R, step R to right side<br>" +
+          "3-4: Rock back L, recover R<br>" +
+          "5&6: Step L to left side, step R beside L, step L to left side<br>" +
+          "7-8: Rock back R, recover L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Forward Shuffles (R & L), Rocking Chair</strong>" +
+          "9&10: Forward shuffle (R-L-R)<br>" +
+          "11&12: Forward shuffle (L-R-L)<br>" +
+          "13-14: Rock forward R, recover L<br>" +
+          "15-16: Rock back R, recover L</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Step Kick, Step Back Touch & ¼ Turn Step Kick, Step Back Touch</strong>" +
+          "17-18: Step forward R, kick L forward<br>" +
+          "19-20: Step back L, touch R toe back<br>" +
+          "21-22: Turn ¼ right stepping forward R, kick L forward<br>" +
+          "23-24: Step back L, touch R toe back</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Forward Shuffles (R & L), ½ Pivot Turn Left, Walks</strong>" +
+          "25&26: Forward shuffle (R-L-R)<br>" +
+          "27&28: Forward shuffle (L-R-L)<br>" +
+          "29-30: Step forward R, pivot ½ turn left (weight onto L)<br>" +
+          "31-32: Walk forward R, walk forward L</div>"
+        ],
+        songs: [
+          { title: "Believe Me Baby (I Lied)", url: "https://youtu.be/KhfjkhDibEg" },
+          { title: "ขอให้รวย", url: "https://youtu.be/pShhJLEpPxY" },
+          { title: "Dance Little Lady Dance", url: "https://youtu.be/LXYqDvwjW0U" },
+          { title: "เพียงกระซิบ", url: "https://youtu.be/rgzNo-12ci0" },
+          { title: "บังเอิญมันได้", url: "https://youtu.be/dKkRGiNCk-g" }
+        ]
+      },
+      summernightchacha: {
+        name: "Summer Night Cha Cha",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/sPLvpWgLabY" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Diagonal Steps & Hip Bumps</strong>" +
+          "1-2: Step R forward diagonal, bump hips R-L<br>" +
+          "3&4: Bump hips R-L-R (weight on R)<br>" +
+          "5-6: Step L forward diagonal, bump hips L-R<br>" +
+          "7&8: Bump hips L-R-L (weight on L)</div>",
+      
+          "<div class='step-section'><strong>[Counts 9-16] Forward Rock, Back Shuffles, Back Rock</strong>" +
+          "1-2: Rock forward R, recover L<br>" +
+          "3&4: Step back R, step L beside R, step back R<br>" +
+          "5&6: Step back L, step R beside L, step back L<br>" +
+          "7-8: Rock back R, recover L</div>",
+      
+          "<div class='step-section'><strong>[Counts 17-24] Side Cha-Chas & Turns</strong>" +
+          "1&2: Side shuffle right (R-L-R)<br>" +
+          "3-4: ½ turn right rocking L to side, recover R<br>" +
+          "5&6: Side shuffle left (L-R-L)<br>" +
+          "7-8: ¼ turn left rocking forward R, recover L</div>",
+      
+          "<div class='step-section'><strong>[Counts 25-32] ½ Turn Cha-Cha, Kick-Hook, Forward Cha-Cha, Pivot ½ Left</strong>" +
+          "1&2: ½ turn right shuffle forward (R-L-R)<br>" +
+          "3-4: Kick L forward, hook L heel across R shin<br>" +
+          "5&6: Forward shuffle (L-R-L)<br>" +
+          "7-8: Step forward R, pivot ½ turn left</div>"
+        ],
+        songs: [
+          { title: "Summer Night Cha Cha", url: "https://youtu.be/1uwTExhWv-M" }
+        ]
+      },
+      sexbombk: {
+        name: "Sex Bomb Korean Version",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/wTlqgyIcYAw" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Walk Forward, Kick & Walk Back, Touch</strong>" +
+          "1-3: Walk forward R, L, R<br>" +
+          "4: Kick L forward<br>" +
+          "5-7: Walk back L, R, L<br>" +
+          "8: Touch R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Grapevine Right & Grapevine Left</strong>" +
+          "1-3: Step R to right side, cross L behind R, step R to right side<br>" +
+          "4: Touch L beside R<br>" +
+          "5-7: Step L to left side, cross R behind L, step L to left side<br>" +
+          "8: Touch R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Side Mambo Steps (x2)</strong>" +
+          "1&2: Rock R to right side, recover L, step R beside L<br>" +
+          "3&4: Rock L to left side, recover R, step L beside R<br>" +
+          "5&6: Rock R to right side, recover L, step R beside L<br>" +
+          "7&8: Rock L to left side, recover R, step L beside R</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Forward Shuffles & ¼ Pivot Turns Left</strong>" +
+          "1&2: Step R forward, step L beside R, step R forward<br>" +
+          "3&4: Make ¼ turn left stepping L forward, step R beside L, step L forward<br>" +
+          "5-6: Step R forward, pivot ¼ turn left<br>" +
+          "7-8: Step R forward, pivot ¼ turn left</div>"
+        ],
+        songs: [
+          { title: "Sex Bomb by Tom Jones ", url: "https://youtu.be/WZ32gSLNHfA" }
+        ]
+      },
+
+      sexbombr: {
+        name: "Sex Bomb Rose Beth",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://youtu.be/aruvrSes4uU" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Diagonal Step-Touches & Hip Bumps</strong>" +
+          "1-2: Step R diagonal forward right, touch L beside R & clap<br>" +
+          "3-4: Step L diagonal back left, touch R beside L & clap<br>" +
+          "5-8: Bump hips R, R, L, L</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Grapevine Right & Left with ¼ Turn</strong>" +
+          "1-4: Step R to side, cross L behind R, step R to side, touch L beside R<br>" +
+          "5-8: Step L to side, cross R behind L, turn ¼ left stepping L forward, touch R beside L</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Forward Toe Struts & Pivot ½ Turn Left</strong>" +
+          "1-2: Touch R toe forward, drop R heel<br>" +
+          "3-4: Touch L toe forward, drop L heel<br>" +
+          "5-6: Step R forward, pivot ½ turn left<br>" +
+          "7-8: Walk forward R, L</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Side Rock Recovers & Jazz Box</strong>" +
+          "1-2: Rock R to right side, recover L<br>" +
+          "3-4: Rock R to right side, recover L<br>" +
+          "5-8: Cross R over L, step L back, step R side, step L forward</div>"
+        ],
+        songs: [
+          { title: "Sex Bomb by Tom Jones ", url: "https://youtu.be/WZ32gSLNHfA" }
+        ]
+      },
+
+      hillbillyrockhillbillyroll: {
+        name: "Hillbilly Rock Hillbilly Roll",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://www.youtube.com/results?search_query=Hillbilly+Rock+Hillbilly+Roll+line+dance+tutorial" }
+        ],
+        steps: [
+          "<div class='step-section'><strong>[Counts 1-8] Step Hook, Step Kick, Coaster Step, Hold</strong>" +
+          "1-2: Step R forward, hook L behind R knee<br>" +
+          "3-4: Step L back, kick R forward<br>" +
+          "5-8: Step R back, step L beside R, step R forward, hold</div>",
+
+          "<div class='step-section'><strong>[Counts 9-16] Toe Heel Step, Hold & Grapevine Right, Hold</strong>" +
+          "1-2: Touch L toe beside R instep, touch L heel beside R instep<br>" +
+          "3-4: Rock L to side, hold<br>" +
+          "5-8: Step R to side, cross L behind R, step R to side, hold</div>",
+
+          "<div class='step-section'><strong>[Counts 17-24] Step Hook, Step Kick, Coaster Step, Hold</strong>" +
+          "1-2: Step L forward, hook R behind L knee<br>" +
+          "3-4: Step R back, kick L forward<br>" +
+          "5-8: Step L back, step R beside L, step L forward, hold</div>",
+
+          "<div class='step-section'><strong>[Counts 25-32] Toe Heel Step, Hold & Grapevine Left ¼ Turn, Hold</strong>" +
+          "1-2: Touch R toe beside L instep, touch R heel beside L instep<br>" +
+          "3-4: Rock R to side, hold<br>" +
+          "5-8: Step L to side, cross R behind L, turn ¼ left stepping L forward, hold</div>",
+
+          "<div class='step-section'><strong>[Counts 33-40] Rock Steps, ½ Pivot Turn Left, Touch, Hold</strong>" +
+          "1-2: Rock R forward, recover L<br>" +
+          "3-4: Rock R back, recover L<br>" +
+          "5-6: Step R forward, pivot ½ turn left (weight to L)<br>" +
+          "7-8: Touch R toe beside L, hold</div>",
+
+          "<div class='step-section'><strong>[Counts 41-48] Sailor Steps Right & Left with Holds</strong>" +
+          "1-4: Cross R behind L, step L side, step R side, hold<br>" +
+          "5-8: Cross L behind R, step R side, step L side, hold</div>"
+        ],
+        songs: [
+          { title: "Hillbilly Rock Hillbilly Roll ", url: "https://youtu.be/AbpZnxZJiac" }
+        ]
+      },      
+      //  add on  2026-09-09  11:32 am  for KC's request to add "Cry to Me" line dance
+      crytome: {
+        name: "Cry to Me",
+        tutorials: [
+          { label: "สอน & ซ้อมเต้น", url: "https://www.youtube.com/watch?v=aKbPMjJQYSA&t=9s" }
+        ],
+      steps: [
+        "<div class='step-section'><strong>[Counts 1-8] Side, Together, Forward Shuffle, Rock & ½ Turn Shuffle</strong>" +
+        "1-2: Step R side, step L beside R<br>" +
+        "3&4: Forward shuffle (R-L-R)<br>" +
+        "5-6: Rock forward L, recover R<br>" +
+        "7&8: ½ turn left shuffle forward (L-R-L)</div>",
+             "<div class='step-section'><strong>[Counts 9-16] Side, Together, Forward Shuffle, Rock & ¼ Turn Chasse</strong>" +
+        "1-2: Step R side, step L beside R<br>" +
+        "3&4: Forward shuffle (R-L-R)<br>" +
+        "5-6: Rock forward L, recover R<br>" +
+        "7&8: ¼ turn left side chasse (L-R-L)</div>",
+             "<div class='step-section'><strong>[Counts 17-24] Cross Rocks & Side Chasses (R & L)</strong>" +
+        "1-2: Cross rock R over L, recover L<br>" +
+        "3&4: Side chasse right (R-L-R)<br>" +
+        "5-6: Cross rock L over R, recover R<br>" +
+        "7&8: Side chasse left (L-R-L)</div>",
+             "<div class='step-section'><strong>[Counts 25-32] Weave Crosses & Sailor Steps with ¼ Turn</strong>" +
+        "1-2: Cross R over L, step L to side<br>" +
+        "3&4: Right sailor step (R-L-R)<br>" +
+        "5-6: Cross L over R, step R to side<br>" +
+        "7&8: Left sailor step making ¼ turn left (L-R-L)</div>"
+      ],
+      songs: [
+        { title: "Cry to Me - Solomon Burke", url: "https://www.youtube.com/results?search_query=Cry+to+Me+Solomon+Burke" },
+        { title: "Cry to Me - Ronnie Beard ***", url: "https://www.youtube.com/results?search_query=Cry+to+Me+Ronnie+Beard" }
+      ]
+    }  // end of crytome dance style
+
+  };    // end of danceData object
+
+    function showStyle(key, element) {
+      const item = danceData[key];
+      if (!item) return;
+
+      if (element) {
+          document.querySelectorAll('.style-item').forEach(el => el.classList.remove('active'));
+          element.classList.add('active');
+      }
+      
+      // Update button label
+      document.getElementById('currentStyleLabel').textContent = item.name;      
+    
+      // Close the dropdown after selection (if using integrated dropdown)
+      const styleDropdown = document.getElementById('styleDropdownWrapper');
+      if (styleDropdown) {
+        styleDropdown.removeAttribute('open');
+      }
+    
+      // Close the accordion wrapper on mobile (if using original layout)
+      const accordionWrapper = document.getElementById('accordionWrapper');
+      if (accordionWrapper && window.innerWidth < 850) {
+        accordionWrapper.removeAttribute('open');
+      }
+
+      const tbody = document.getElementById('danceTableBody');
+      
+      const tutorialLinksHTML = item.tutorials
+        .map(t => `<a href="${t.url}" target="_blank">▶ ${t.label}</a>`)
+        .join('');
+
+      const stepsListHTML = item.steps
+        .map(step => `<li>${step}</li>`)
+        .join('');
+
+      const smileySvg = `<svg class="song-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="42" fill="none" stroke="#e08626" stroke-width="5" />
+        <ellipse cx="38" cy="40" rx="4" ry="7.5" fill="#e08626" />
+        <ellipse cx="62" cy="40" rx="4" ry="7.5" fill="#e08626" />
+        <path d="M 28,56 A 22,22 0 0,0 72,56" fill="none" stroke="#e08626" stroke-width="5" stroke-linecap="round" />
+      </svg>`;
+      
+      const songsListHTML = item.songs
+        .map(s => `<li><a href="${s.url}" target="_blank">${smileySvg} ${s.title}</a></li>`)
+        .join('');
+        
+      tbody.innerHTML = `
+        <tr>
+          <td>
+            <div class="dance-info">
+              <span class="dance-title">${item.name}</span>
+              <div class="dance-links">
+                ${tutorialLinksHTML}
+              </div>
+            </div>
+          </td>
+          <td>
+            <ul class="song-list">
+              ${songsListHTML}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="instructions-box">
+              <strong class="title">BASIC MOVE STEPS:</strong>
+              <ol>
+                ${stepsListHTML}
+              </ol>
+            </div>
+          </td>
+        </tr>
+      `;
+      // Scroll the panel/viewport back to the top smoothly
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });      
+    }
+
+    // mod 2026-09-14  9:00 pm KC's request if tag-menu get pick, pick first result, then show filter results
+    function insertTag(tagText) {
+      const input = document.getElementById('searchInput');
+      
+      // 1. Set search input value
+      input.value = tagText;
+    
+      // 2. Close the Tag Menu
+      const tagMenuWrapper = document.getElementById('tagMenuWrapper');
+      if (tagMenuWrapper) {
+        tagMenuWrapper.removeAttribute('open');
+      }
+    
+      // 3. Filter styles based on selected tag
+      filterStyles();
+    
+      // 4. Auto-expand the Style Menu dropdown
+      const styleDropdown = document.getElementById('styleDropdownWrapper');
+      if (styleDropdown) {
+        styleDropdown.setAttribute('open', 'true');
+      }
+    
+      // 5. Find and automatically select the first visible style option
+      const firstVisibleStyle = document.querySelector('.style-item[style*="display: flex"], .style-item:not([style*="display: none"])');
+      if (firstVisibleStyle) {
+        // Extracts the key or clicks the first visible option directly, this will close tag-menu I think
+        firstVisibleStyle.click();
+      }
+      // 6. kc did this , to reopen tag-menu..  open the style dropdown to show the filtered results
+      if (styleDropdown) {
+        styleDropdown.setAttribute('open', 'true');
+      }
+      // 7. Remove focus from the search input to prevent mobile keyboard from staying open
+      input.blur();
+    }
+
+    function filterStyles() {
+      const input = document.getElementById('searchInput');
+      const clearBtn = document.getElementById('clearBtn');
+      const query = input.value.toLowerCase();
+      const items = document.querySelectorAll('.style-item');
+    
+      clearBtn.style.display = input.value.length > 0 ? 'inline-flex' : 'none';
+    
+      // accordianWrapper was removed when kc put the style-box inside the search-box now we have styleDropdownWrapper instead:
+      if (query.length > 0) { document.getElementById('styleDropdownWrapper').setAttribute('open', 'true'); }
+
+    
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? 'flex' : 'none';
+      });
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      filterStyles();
+      input.focus();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const activeItem = document.querySelector('.style-item.active') || document.querySelector('.style-item');
+      showStyle('electricslide', activeItem);
+    });
+  </script>
+</body>
+</html>
