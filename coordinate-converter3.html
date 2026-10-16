@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23d622fa%22></rect><path fill=%22%23fff%22 d=%22M59.59 47.63L85.25 79.92Q85.63 80.50 85.63 81.25Q85.63 82.02 85.01 82.63Q84.39 83.25 83.54 83.25L83.54 83.25L59.02 83.25Q56.84 83.25 55.60 81.73L55.60 81.73L39.07 61.30L39.07 80.69Q39.07 81.73 38.31 82.49Q37.55 83.25 36.51 83.25L36.51 83.25L16.94 83.25Q15.89 83.25 15.13 82.49Q14.38 81.73 14.38 80.69L14.38 80.69L14.38 19.31Q14.38 18.27 15.13 17.51Q15.89 16.75 16.94 16.75L16.94 16.75L36.51 16.75Q37.55 16.75 38.31 17.51Q39.07 18.27 39.07 19.31L39.07 19.31L39.07 37.17L54.09 18.36Q55.51 16.75 57.60 16.75L57.60 16.75L80.50 16.75Q81.35 16.75 81.97 17.37Q82.59 17.98 82.59 18.79Q82.59 19.60 82.11 20.17L82.11 20.17L59.59 47.63Z%22></path></svg>" />
+    <title>Coordinate Converter 2026-10-16</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text: #334155;
+            --border: #cbd5e1;
+            --success: #16a34a;
+            --successKC: #d622fa;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0.75rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.3rem;
+            margin: 0.5rem 0 1rem 0;
+            color: #0f172a;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        h2 {
+            font-size: 0.95rem;
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .dms-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 55px;
+            gap: 0.25rem;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
+            color: #64748b;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.4rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 0.25rem;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+            -webkit-appearance: none;
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid var(--primary);
+            border-color: transparent;
+        }
+
+        button.action-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+
+        button.action-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .result-box {
+            margin-top: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.25rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.35rem 0;
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .result-item:not(:last-child) {
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .result-text {
+            word-break: break-all;
+            padding-right: 0.5rem;
+        }
+
+        .copy-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            white-space: nowrap;
+            color: #334155;
+        }
+
+        .copy-btn.copied {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Coordinate Converter</h1>
+
+    <!-- DD to DMS Card -->
+    <div class="card">
+        <h2>Decimal Degrees &rarr; DMS</h2>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="latDD">Latitude (DD)</label>
+                <input type="number" id="latDD" step="any" placeholder="41.40338">
+            </div>
+            <div class="form-group">
+                <label for="lngDD">Longitude (DD)</label>
+                <input type="number" id="lngDD" step="any" placeholder="2.17403">
+            </div>
+        </div>
+        <button class="action-btn" onclick="processDDtoDMS()">Convert to DMS</button>
+        
+        <div id="boxDDResult" class="result-box hidden">
+            <div class="result-item">
+                <span id="resLatDMS" class="result-text"></span>
+                <button class="copy-btn" onclick="copyText('resLatDMS', this)">Copy</button>
+            </div>
+            <div class="result-item">
+                <span id="resLngDMS" class="result-text"></span>
+                <button class="copy-btn" onclick="copyText('resLngDMS', this)">Copy</button>
+            </div>
+            <div class="result-item" style="color: var(--primary)">
+                <span id="resCombinedDMS" class="result-text"></span>
+                <button class="copy-btn" onclick="copyText('resCombinedDMS', this)">Copy Pair</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DMS to DD Card -->
+    <div class="card">
+        <h2>DMS &rarr; Decimal Degrees</h2>
+        
+        <div class="form-group">
+            <label>Latitude (Deg / Min / Sec / Dir)</label>
+            <div class="dms-row">
+                <input type="number" id="latDeg" placeholder="°" min="0" max="90">
+                <input type="number" id="latMin" placeholder="'" min="0" max="59" step="any">
+                <input type="number" id="latSec" placeholder='"' min="0" max="59.99" step="any">
+                <select id="latDir"><option value="N">N</option><option value="S">S</option></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Longitude (Deg / Min / Sec / Dir)</label>
+            <div class="dms-row">
+                <input type="number" id="lngDeg" placeholder="°" min="0" max="180">
+                <input type="number" id="lngMin" placeholder="'" min="0" max="59" step="any">
+                <input type="number" id="lngSec" placeholder='"' min="0" max="59.99" step="any">
+                <select id="lngDir"><option value="E">E</option><option value="W">W</option></select>
+            </div>
+        </div>
+        
+        <button class="action-btn" onclick="processDMStoDD()">Convert to DD</button>
+        
+        <div id="boxDMSResult" class="result-box hidden">
+            <div class="result-item" style="color: var(--primary); font-size: 0.9rem;">
+                <span id="resCombinedDD" class="result-text"></span>
+                <button class="copy-btn" onclick="copyText('resCombinedDD', this)">Copy Pair</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function convertSingleDDtoDMS(ddVal, isLongitude) {
+        const totalHundredthsOfSeconds = Math.round(Math.abs(ddVal) * 3600 * 100);
+        const degrees = Math.floor(totalHundredthsOfSeconds / 360000);
+        const remainder = totalHundredthsOfSeconds % 360000;
+        const minutes = Math.floor(remainder / 6000);
+        const seconds = ((remainder % 6000) / 100).toFixed(2);
+        const direction = isLongitude ? (ddVal >= 0 ? "E" : "W") : (ddVal >= 0 ? "N" : "S");
+        return `${degrees}°${minutes}'${seconds}"${direction}`;
+    }
+
+    function convertSingleDMStoDD(deg, min, sec, direction) {
+        let dd = deg + (min / 60) + (sec / 3600);
+        return (direction === "S" || direction === "W") ? dd * -1 : dd;
+    }
+
+    function processDDtoDMS() {
+        const latVal = parseFloat(document.getElementById('latDD').value);
+        const lngVal = parseFloat(document.getElementById('lngDD').value);
+        if (isNaN(latVal) || isNaN(lngVal)) return alert("Enter both coordinates.");
+        if (latVal < -90 || latVal > 90) return alert("Latitude must be between -90 and 90.");
+        if (lngVal < -180 || lngVal > 180) return alert("Longitude must be between -180 and 180.");
+
+        const latStr = convertSingleDDtoDMS(latVal, false);
+        const lngStr = convertSingleDDtoDMS(lngVal, true);
+
+        document.getElementById('resLatDMS').textContent = latStr;
+        document.getElementById('resLngDMS').textContent = lngStr;
+        document.getElementById('resCombinedDMS').textContent = `${latStr} ${lngStr}`;
+        document.getElementById('boxDDResult').classList.remove('hidden');
+    }
+
+    function processDMStoDD() {
+        const latD = Number(document.getElementById('latDeg').value);
+        const latM = document.getElementById('latMin').value === "" ? 0 : Number(document.getElementById('latMin').value);
+        const latS = document.getElementById('latSec').value === "" ? 0 : Number(document.getElementById('latSec').value);
+        const latDir = document.getElementById('latDir').value;
+
+        const lngD = Number(document.getElementById('lngDeg').value);
+        const lngM = document.getElementById('lngMin').value === "" ? 0 : Number(document.getElementById('lngMin').value);
+        const lngS = document.getElementById('lngSec').value === "" ? 0 : Number(document.getElementById('lngSec').value);
+        const lngDir = document.getElementById('lngDir').value;
+
+        if (document.getElementById('latDeg').value === "" || document.getElementById('lngDeg').value === "") {
+            return alert("Enter at least standard Degree values.");
+        }
+        if (![latD, latM, latS, lngD, lngM, lngS].every(Number.isFinite)) {
+            return alert("Enter valid numeric DMS values.");
+        }
+        if (!Number.isInteger(latD) || latD < 0 || latD > 90 || latM < 0 || latM >= 60 || latS < 0 || latS >= 60) {
+            return alert("Latitude must use 0-90 degrees and minutes/seconds from 0 up to (but not including) 60.");
+        }
+        if (!Number.isInteger(lngD) || lngD < 0 || lngD > 180 || lngM < 0 || lngM >= 60 || lngS < 0 || lngS >= 60) {
+            return alert("Longitude must use 0-180 degrees and minutes/seconds from 0 up to (but not including) 60.");
+        }
+        if ((latD === 90 && (latM !== 0 || latS !== 0)) || (lngD === 180 && (lngM !== 0 || lngS !== 0))) {
+            return alert("Minutes and seconds must be 0 at the maximum degree value.");
+        }
+
+        const finalLatDD = convertSingleDMStoDD(latD, latM, latS, latDir).toFixed(6);
+        const finalLngDD = convertSingleDMStoDD(lngD, lngM, lngS, lngDir).toFixed(6);
+
+        document.getElementById('resCombinedDD').textContent = `${finalLatDD}, ${finalLngDD}`;
+        document.getElementById('boxDMSResult').classList.remove('hidden');
+    }
+
+    function copyText(elementId, btn) {
+        const text = document.getElementById(elementId).textContent;
+        navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = "Copied!";
+        btn.classList.add('copied');
+        setTimeout(() => {
+        btn.textContent = originalText;
+        btn.classList.remove('copied');
+        }, 1500);
+        }).catch(err => alert("Failed to copy text."));
+    }
+</script>
+
+</body>
+</html>    
